@@ -5,7 +5,8 @@ let bookList = document.getElementById("book-list")
 // book Class
 
 class Book {
-    constructor(type, title, author, quantity, shelf, rack) {
+    constructor(atype, type, title, author, quantity, shelf, rack) {
+        this.atype = atype
         this.type = type
         this.title = title
         this.author = author
@@ -23,6 +24,7 @@ class UI {
         let row = document.createElement("tr")
 
         row.innerHTML = `
+        <td>${book.atype}</td>
         <td>${book.type}</td>
         <td>${book.title}</td>
         <td>${book.author}</td>
@@ -36,6 +38,7 @@ class UI {
     }
     // ************************** clear Fields************
     static clearFields() {
+        document.getElementById("atype").avalue = ""
         document.getElementById("type").value = ""
         document.getElementById("title").value = ""
         document.getElementById("author").value = ""
@@ -100,6 +103,7 @@ document.addEventListener("DOMContentLoaded", getBooks)
 // Define Function
 
 function newBook(e) {
+    let atype = document.getElementById("atype").value
     let type = document.getElementById("type").value
     let title = document.getElementById("title").value
     let author = document.getElementById("author").value
@@ -107,10 +111,10 @@ function newBook(e) {
     let shelf = document.getElementById("shelf").value
     let rack = document.getElementById("rack").value
 
-    if (type === "" || title === "" || author === "" || quantity === "" || shelf === "" || rack === "") {
+    if (atype === "" || type === "" || title === "" || author === "" || quantity === "" || shelf === "" || rack === "") {
         UI.showAlert("Please Fill All The Fields!", "error")
     } else {
-        let book = new Book(type, title, author, quantity, shelf, rack)
+        let book = new Book(atype, type, title, author, quantity, shelf, rack)
          UI.showAlert("New Book Added!", "success")
         UI.addToBooklist(book)
         UI.clearFields()
@@ -139,6 +143,7 @@ function getBooks(e) {
             let row = document.createElement("tr")
     
             row.innerHTML = `
+            <td>${book.atype}</td>
             <td>${book.type}</td>
             <td>${book.title}</td>
             <td>${book.author}</td>
