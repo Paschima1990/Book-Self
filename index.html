@@ -1,373 +1,78 @@
 <!DOCTYPE html>
-<html lang="or">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Paschima Stock</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css" />
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            background-color: #f8f9fa;
-        }
-
-        h2 {
-            color: #343a40;
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .section-title {
-            font-size: 24px;
-            color: #343a40;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-
-        .form-section,
-        .list-section {
-            padding: 20px;
-            background-color: #f1f1f1;
-            border-radius: 8px;
-            margin-bottom: 30px;
-        }
-
-        .form-section {
-            background-color: #e9ecef;
-        }
-
-        input,
-        select,
-        button {
-            margin: 8px 0;
-            padding: 10px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        button {
-            background-color: #007bff;
+        .success,.error{
             color: white;
-            cursor: pointer;
-            width: auto;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.4);
-        }
-
-        .modal-content {
-            background-color: #fff;
-            margin: 15% auto;
-            padding: 20px;
-            border-radius: 8px;
-            width: 80%;
-            max-width: 400px;
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close:hover {
-            color: #000;
-        }
-
-        .table-container {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #007bff;
-            color: white;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        .search-container {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
-        .search {
-            width: 70%;
             padding: 10px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
+            margin: 5px 0 15px 0;
         }
-
-        .separator {
-            margin: 20px 0;
-            border-top: 2px solid #ccc;
-            margin-bottom: 20px;
+        .error{
+            background: red;
         }
-
-        .interactive-input {
-            width: auto;
-            display: inline-block;
-            margin-right: 20px;
+        .success{
+            background: green;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
-        <h2>Paschima Stock</h2>
-
-        <!-- Add Book Form Section (Visible by Default) -->
-        <div class="form-section">
-            <h3 class="section-title">Add New Book</h3>
-
-            <!-- Alphabet Dropdown -->
-            <label>Alphabet: 
-                <select id="alphabet">
-                    <option>ଅ</option>
-                    <option>ଆ</option>
-                    <option>ଇ</option>
-                    <option>ଈ</option>
-                    <option>ଉ</option>
-                    <option>ଊ</option>
-                    <option>ୃ</option>
-                    <option>ଏ</option>
-                    <option>ଐ</option>
-                    <option>ଓ</option>
-                    <option>ଔ</option>
-                    <option>କ</option>
-                    <option>ଖ</option>
-                    <option>ଗ</option>
-                    <option>ଘ</option>
-                    <option>ଙ</option>
-                    <option>ଚ</option>
-                    <option>ଛ</option>
-                    <option>ଜ</option>
-                    <option>ଝ</option>
-                    <option>ଞ</option>
-                    <option>ଟ</option>
-                    <option>ଠ</option>
-                    <option>ଡ</option>
-                    <option>ଢ</option>
-                    <option>ଣ</option>
-                    <option>ତ</option>
-                    <option>ଥ</option>
-                    <option>ଦ</option>
-                    <option>ଧ</option>
-                    <option>ନ</option>
-                    <option>ପ</option>
-                    <option>ଫ</option>
-                    <option>ବ</option>
-                    <option>ଭ</option>
-                    <option>ମ</option>
-                    <option>ଯ</option>
-                    <option>ର</option>
-                    <option>ଲ</option>
-                    <option>ଶ</option>
-                    <option>ଷ</option>
-                    <option>ସ</option>
-                    <option>ହ</option>
-                    <option>ଳ</option>
-                    <option>କ୍ଷ</option>
-                    <option>ଜ୍ଞ</option>
-                </select>
-            </label>
-
-            <!-- Category Dropdown -->
-            <label>Category: 
-                <select id="category">
-                    <option>Story</option>
-                    <option>Poetry</option>
-                    <option>Novel</option>
-                    <option>Children</option>
-                    <option>Biography</option>
-                    <option>Drama</option>
-                    <option>Essay</option>
-                </select>
-            </label>
-
-            <!-- Author Dropdown or Manual Input -->
-            <label>Author: 
-                <select id="author">
-                    <option value="">Select Author</option>
-                    <option value="Author1">Author 1</option>
-                    <option value="Author2">Author 2</option>
-                    <option value="Author3">Author 3</option>
-                </select>
-                <input type="text" id="newAuthor" placeholder="Or add a new author" style="display: none;">
-                <button onclick="toggleNewAuthorInput()">Add New Author</button>
-            </label>
-
-            <!-- Rack and Shelf (Interactive Inputs) -->
+        <h3>Book List</h3>
+        <form action="" id="form-list">
             <div>
-                <label class="interactive-input">Rack: <input type="number" id="rack" min="1" max="18"></label>
-                <label class="interactive-input">Shelf: <input type="number" id="shelf" min="1" max="5"></label>
+                <label for="type">Type</label>
+                <input type="text" name="" id="type" class="u-full-width">
             </div>
-
-            <div class="separator"></div>
-
-            <!-- Upload Book Option -->
-            <label>Upload Excel File: 
-                <input type="file" id="upload" accept=".xlsx" onchange="importFromExcel(event)">
-            </label>
-
-            <button onclick="addBook();">Add Book</button>
-        </div>
-
-        <!-- Book List Section -->
-        <div class="list-section">
-            <h3 class="section-title">Book List</h3>
-
-            <!-- Filter and Sort Options -->
-            <div class="search-container">
-                <input type="text" id="search" placeholder="Search by name or author" class="search" onkeyup="filterBooks()">
-                <button onclick="exportToExcel()">Export to Excel</button>
-                <select id="sortOptions" onchange="sortBooks()">
-                    <option value="bookName">Sort by Name</option>
-                    <option value="author">Sort by Author</option>
-                    <option value="alphabet">Sort by Alphabet</option>
-                </select>
+            <div>
+                <label for="title">Title</label>
+                <input type="text" name="" id="title" class="u-full-width">
             </div>
-
-            <div class="table-container">
-                <table id="bookTable">
-                    <tr><th>Sl. No.</th><th>Book Name</th><th>Author</th><th>Category</th><th>Rack</th><th>Shelf</th><th>Actions</th></tr>
-                </table>
+            <div>
+                <label for="author">Author</label>
+                <input type="text" name="" id="author" class="u-full-width">
             </div>
-        </div>
+            <div>
+                <label for="quantity">Quantity</label>
+                <input type="text" name="" id="quantity" class="u-full-width">
+            </div>
+            <div>
+                <label for="shelf">Shelf</label>
+                <input type="text" name="" id="shelf" class="u-full-width">
+            </div>
+            <div>
+                <label for="rack">Rack</label>
+                <input type="text" name="" id="rack" class="u-full-width">
+            </div>
+            <div>
+                <input type="submit" value="Submit" name="" id="" class="u-full-width">
+            </div>
+        </form>
+        <table class="u-full-width">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Quantity</th>
+                    <th>Shelf</th>
+                    <th>Rack</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody id="book-list">
+
+            </tbody>
+        </table>
     </div>
 
-    <script>
-        let books = [];
-
-        function toggleNewAuthorInput() {
-            const newAuthorInput = document.getElementById('newAuthor');
-            newAuthorInput.style.display = newAuthorInput.style.display === 'block' ? 'none' : 'block';
-        }
-
-        function addBook() {
-            const bookName = document.getElementById('bookName').value;
-            const author = document.getElementById('author').value || document.getElementById('newAuthor').value;
-            const category = document.getElementById('category').value;
-            const alphabet = document.getElementById('alphabet').value;
-            const rack = document.getElementById('rack').value;
-            const shelf = document.getElementById('shelf').value;
-
-            books.push({ bookName, author, category, alphabet, rack, shelf });
-            renderTable();
-            clearForm();
-        }
-
-        function renderTable() {
-            const table = document.getElementById('bookTable');
-            table.innerHTML = <tr><th>Sl. No.</th><th>Book Name</th><th>Author</th><th>Category</th><th>Rack</th><th>Shelf</th><th>Actions</th></tr>;
-            
-            books.forEach((book, index) => {
-                const row = table.insertRow();
-                row.innerHTML = <td>${index + 1}</td><td>${book.bookName}</td><td>${book.author}</td><td>${book.category}</td><td>${book.rack}</td><td>${book.shelf}</td><td><button onclick="editBook(${index})">Edit</button><button onclick="deleteBook(${index})">Delete</button></td>;
-            });
-        }
-
-        function filterBooks() {
-            const query = document.getElementById('search').value.toLowerCase();
-            const filteredBooks = books.filter(book => 
-                book.bookName.toLowerCase().includes(query) || book.author.toLowerCase().includes(query)
-            );
-            renderFilteredBooks(filteredBooks);
-        }
-
-        function renderFilteredBooks(filteredBooks) {
-            const table = document.getElementById('bookTable');
-            table.innerHTML = <tr><th>Sl. No.</th><th>Book Name</th><th>Author</th><th>Category</th><th>Rack</th><th>Shelf</th><th>Actions</th></tr>;
-            
-            filteredBooks.forEach((book, index) => {
-                const row = table.insertRow();
-                row.innerHTML = <td>${index + 1}</td><td>${book.bookName}</td><td>${book.author}</td><td>${book.category}</td><td>${book.rack}</td><td>${book.shelf}</td><td><button onclick="editBook(${index})">Edit</button><button onclick="deleteBook(${index})">Delete</button></td>;
-            });
-        }
-
-        function editBook(index) {
-            const book = books[index];
-            document.getElementById('bookName').value = book.bookName;
-            document.getElementById('author').value = book.author;
-            document.getElementById('category').value = book.category;
-            document.getElementById('alphabet').value = book.alphabet;
-            document.getElementById('rack').value = book.rack;
-            document.getElementById('shelf').value = book.shelf;
-            books.splice(index, 1);  // Remove book for re-entry
-        }
-
-        function deleteBook(index) {
-            books.splice(index, 1);
-            renderTable();
-        }
-
-        function importFromExcel(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const data = e.target.result;
-                const workbook = XLSX.read(data, { type: 'binary' });
-                const sheet = workbook.Sheets[workbook.SheetNames[0]];
-                const json = XLSX.utils.sheet_to_json(sheet);
-                books = json;
-                renderTable();
-            };
-            reader.readAsBinaryString(file);
-        }
-
-        function sortBooks() {
-            const sortOption = document.getElementById('sortOptions').value;
-            books.sort((a, b) => {
-                if (a[sortOption] < b[sortOption]) return -1;
-                if (a[sortOption] > b[sortOption]) return 1;
-                return 0;
-            });
-            renderTable();
-        }
-    </script>
+    <script src="./script.js"></script>
 </body>
+
 </html>
