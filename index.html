@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="or">
+<head>
+    <meta charset="UTF-8">
+    <title>Odia Book Library</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f8f9fa; }
+        h2 { color: #343a40; }
+        .container { max-width: 600px; margin: auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+        input, select, button { margin: 5px; padding: 8px; border-radius: 4px; border: 1px solid #ccc; }
+        button { background-color: #007bff; color: white; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #007bff; color: white; }
+        tr:nth-child(even) { background-color: #f2f2f2; }
+        .search { margin-bottom: 10px; padding: 8px; width: 100%; border-radius: 4px; border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Odia Book Library</h2>
+        <label>Alphabet: 
+            <select id="alphabet">
+                <script>
+                    const odiaAlphabet = ['ଅ', 'ଆ', 'ଇ', 'ଈ', 'ଉ', 'ଊ', 'ଋ', 'ଏ', 'ଐ', 'ଓ', 'ଔ', 'କ', 'ଖ', 'ଗ', 'ଘ', 'ଙ', 'ଚ', 'ଛ', 'ଜ', 'ଝ', 'ଞ', 'ଟ', 'ଠ', 'ଡ', 'ଢ', 'ଣ', 'ତ', 'ଥ', 'ଦ', 'ଧ', 'ନ', 'ପ', 'ଫ', 'ବ', 'ଭ', 'ମ', 'ଯ', 'ର', 'ଲ', 'ବ', 'ଶ', 'ଷ', 'ସ', 'ହ', 'ଳ', 'କ୍ଷ', 'ଜ୍ଞ'];
+                    odiaAlphabet.forEach(letter => {
+                        document.write(`<option value="${letter}">${letter}</option>`);
+                    });
+                </script>
+            </select>
+        </label>
+        <label>Book Name: <input type="text" id="bookName"></label>
+        <label>Category: 
+            <select id="category">
+                <option>Story</option>
+                <option>Poetry</option>
+                <option>Novel</option>
+                <option>Children</option>
+                <option>Biography</option>
+                <option>Drama</option>
+                <option>Essay</option>
+            </select>
+        </label>
+        <label>Rack: <input type="number" id="rack" min="1" max="18"></label>
+        <label>Shelf: <input type="number" id="shelf" min="1" max="5"></label>
+        <button onclick="addBook()">Add Book</button>
+        <br>
+        <input type="text" id="search" placeholder="Search by name" class="search" onkeyup="filterBooks()">
+
+        <table id="bookTable">
+            <tr><th>Sl. No.</th><th>Alphabet</th><th>Name</th><th>Category</th><th>Rack</th><th>Shelf</th></tr>
+        </table>
+    </div>
+
+    <script>
+        let bookCount = 0;
+        const books = [];
+
+        function addBook() {
+            const alphabet = document.getElementById('alphabet').value;
+            const name = document.getElementById('bookName').value;
+            const category = document.getElementById('category').value;
+            const rack = document.getElementById('rack').value;
+            const shelf = document.getElementById('shelf').value;
+
+            if (name && rack && shelf) {
+                books.push({ alphabet, name, category, rack, shelf });
+                books.sort((a, b) => a.alphabet.localeCompare(b.alphabet));
+                renderBooks();
+                document.getElementById('bookName').value = '';
+                document.getElementById('rack').value = '';
+                document.getElementById('shelf').value = '';
+            }
+        }
+
+        function renderBooks() {
+            const table = document.getElementById('bookTable');
+            table.innerHTML = '<tr><th>Sl. No.</th><th>Alphabet</th><th>Name</th><th>Category</th><th>Rack</th><th>Shelf</th></tr>';
+            books.forEach((book, index) => {
+                const row = table.insertRow();
+                row.insertCell(0).innerText = index + 1;
+                row.insertCell(1).innerText = book.alphabet;
+                row.insertCell(2).innerText = book.name;
+                row.insertCell(3).innerText = book.category;
+                row.insertCell(4).innerText = book.rack;
+                row.insertCell(5).innerText = book.shelf;
+            });
+        }
+
+        function filterBooks() {
+            const search = document.getElementById('search').value.toLowerCase();
+            const rows = document.querySelectorAll('#bookTable tr');
+
+            rows.forEach((row, index) => {
+                if (index === 0) return;
+                const name = row.cells[2].innerText.toLowerCase();
+                row.style.display = name.includes(search) ? '' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
